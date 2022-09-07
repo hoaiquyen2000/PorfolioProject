@@ -123,19 +123,20 @@ set SoldAsVacant = (case
 	end)
 
 
-	-- REMOVE DUPLICATES
+-- REMOVE DUPLICATES
 
-	with RowNumC as (
-	SELECT *,
-		ROW_NUMBER() over (
-		partition by ParcelID,
-					PropertyAddress,
-					SaleDate,
-					SalePrice,
-					LegalReference
-					Order by UniqueID 
-							) Rownum
-	FROM NashVilleHousing )
+with RowNumC as (
+SELECT *,
+	ROW_NUMBER() over (
+	partition by ParcelID,
+			PropertyAddress,
+			SaleDate,
+			SalePrice,
+			LegalReference
+			Order by UniqueID 
+			) Rownum
+FROM NashVilleHousing )
+
 Select * from RowNumC where rownum > 1 
 
 
